@@ -28,5 +28,3 @@ build
 /dev/yarn-error.log*
 
 */temp.*
-*.db
-BIG

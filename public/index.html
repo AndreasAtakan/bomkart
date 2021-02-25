@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
+	<meta name="description" content="Bomstasjoner i Norge" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<!--link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png" />
+	<link rel="manifest" href="assets/favicons/site.webmanifest" />
+	<link rel="mask-icon" href="assets/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+	<meta name="msapplication-TileColor" content="#da532c" />
+	<meta name="theme-color" content="#ffffff" /-->
+
+	<title>bomkart – Bomstasjoner i Norge</title>
+
+	<!--link rel="icon" href="assets/logo.svg" /-->
+
+
+	<!-- font-awesome import -->
+	<link rel="stylesheet" href="lib/fontawesome/fontawesome.css" />
+
+	<!-- leaflet import -->
+	<script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
+	<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+
+	<!-- leaflet.routing.machine import -->
+	<script type="text/javascript" src="lib/leaflet.routing.machine/leaflet.routing.machine.js"></script>
+	<link rel="stylesheet" href="lib/leaflet.routing.machine/leaflet.routing.machine.css" />
+
+	<!-- leaflet.easybutton import -->
+	<script type="text/javascript" src="lib/leaflet.easybutton/leaflet.easybutton.js"></script>
+	<link rel="stylesheet" href="lib/leaflet.easybutton/leaflet.easybutton.css" />
+
+	<!-- leaflet.coordinates import -->
+	<script type="text/javascript" src="lib/leaflet.coordinates/leaflet.coordinates.js"></script>
+	<link rel="stylesheet" href="lib/leaflet.coordinates/leaflet.coordinates.css" />
+	<link rel="stylesheet" href="lib/leaflet.coordinates/leaflet.coordinates.ie.css" />
+
+	<!-- leaflet.locatecontrol import -->
+	<script type="text/javascript" src="lib/leaflet.locatecontrol/leaflet.locatecontrol.min.js"></script>
+	<link rel="stylesheet" href="lib/leaflet.locatecontrol/leaflet.locatecontrol.min.css" />
+
+	<!-- leaflet.geocoder import -->
+	<script type="text/javascript" src="lib/leaflet.geocoder/leaflet.geocoder.js"></script>
+	<link rel="stylesheet" href="lib/leaflet.geocoder/leaflet.geocoder.css" />
+
+	<!-- leaflet.control.geocoder import -->
+	<script type="text/javascript" src="lib/leaflet.control.geocoder/leaflet.control.geocoder.js"></script>
+
+	<!-- leaflet.markercluster import -->
+	<script type="text/javascript" src="lib/leaflet.markercluster/leaflet.markercluster.js"></script>
+	<link rel="stylesheet" href="lib/leaflet.markercluster/leaflet.markercluster.css" />
+	<link rel="stylesheet" href="lib/leaflet.markercluster/leaflet.markercluster.default.css" />
+
+
+	<!-- google maps import -->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOhUleCCqG94Kujoff1yFCWbpDj1of4PI&callback=initMap&libraries=&v=weekly" defer></script>
+	<script type="text/javascript">
+		"use strict";
+
+		function initMap() { console.log("-"); }
+	</script>
+
+
+	<!-- custom styles -->
+	<link rel="stylesheet" href="css/main.css" />
+
+	<style type="text/css">
+		/**/
+	</style>
+
+</head>
+<body>
+
+	<div id="map"></div>
+
+	<div id="streetviewContainer">
+		<i class="fas fa-angle-left" id="back"></i>
+		<div id="streetview"></div>
+		<div id="not_found">
+			<p>No result found</p>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="lib/jquery/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="lib/feather/feather.min.js"></script>
+
+	<script type="text/javascript" src="js/uuid.js"></script>
+	<script type="text/javascript" src="js/map.js"></script>
+
+	<script type="text/javascript" src="js/data.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>
