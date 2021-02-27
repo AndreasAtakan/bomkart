@@ -13,27 +13,68 @@ L.Map.addInitHook(function() {
 	);
 
 
-	// Zoom control
-	this.addControl(
-		L.control.zoom({
-			position: "topright"
-		})
-	);
-
-
 	// Directions
-	this.addControl(
-		L.Routing.control({
-			geocoder: L.Control.Geocoder.nominatim(),
-			//waypoints: [],
-			//addWaypoints: false,
-			routeWhileDragging: false,
-			showAlternatives: true,
-			collapsible: true,
-			show: false,
-			position: "topright"
-		})
-	);
+	let router = L.Routing.control({
+		geocoder: L.Control.Geocoder.nominatim(),
+		//geocoder: L.Control.Geocoder.google(''),
+		//waypoints: [],
+		//addWaypoints: false,
+		extendToWaypoints: false,
+		draggableWaypoints: false,
+		routeWhileDragging: false,
+		showAlternatives: true,
+		collapsible: true,
+		show: false,
+		position: "topright"
+	});
+
+	router.on('routeselected', ev => {
+		let route = ev.route,
+			waypoints = ev.route.waypoints;
+		let rect = L.latLngBounds(route.coordinates.map(e => L.latLng(e.lat, e.lng)));
+
+		let line = L.polyline(route.coordinates),
+			stasjoner = 0;
+			//pris = 0,
+			//rushpris = 0;
+
+		for(let latlng of window._DATA) {
+			let cont = !rect.contains( L.latLng(latlng[0], latlng[1]) );
+			if(cont) continue;
+
+			/*for(let w of waypoints) {
+				if(Math.abs(latlng[0] - w.latLng.lat) > 0.5
+				&& Math.abs(latlng[1] - w.latLng.lng) > 0.5) {
+					cont = true;
+					break;
+				}
+			}
+			if(cont) continue;*/
+
+			let p = L.latLng(latlng[0], latlng[1]);
+			let nearest = L.GeometryUtil.closest(this, line, p);
+
+			if(p.equals(nearest, 0.001)) {
+				stasjoner += 1;
+				//pris += pt[1];
+				//rushpris += pt[2];
+			}
+		}
+
+		if(stasjoner > 0) {
+			$("p#stasjoner").css("color", "red");
+			$("p#stasjoner").html(`Obs: Rute inneholder ${ stasjoner } ${ stasjoner > 1 ? "bomstasjoner" : "bomstasjon" }!`);
+		}else{
+			$("p#stasjoner").css("color", "green");
+			$("p#stasjoner").html(`Rute inneholder ikke bomstasjoner.`);
+		}
+		//$("span#pris").html(`Ordinær pris: kr ${pris},`);
+		//$("span#rushpris").html(`Rushpris: kr ${rushpris}`);
+	});
+	router.on('routingstart', () => $("body").css("cursor", "progress"));
+	router.on('routesfound routingerror', () => $("body").css("cursor", "default"));
+
+	this.addControl( router );
 
 
 	// Geoposition button (GPS tracking)
@@ -57,7 +98,7 @@ L.Map.addInitHook(function() {
 
 		let latlng = ev.latlng;
 		let lat = latlng.lat,
-				lng = latlng.lng;
+			lng = latlng.lng;
 
 		let panorama = new google.maps.StreetViewPanorama(
 			document.querySelector("#streetview"),
@@ -74,7 +115,7 @@ L.Map.addInitHook(function() {
 			}
 		);
 
-		panorama.H.then(() => {
+		panorama.o.then(() => {
 			setTimeout(() => {
 
 				if(panorama.getStatus() == "ZERO_RESULTS")
@@ -112,26 +153,20 @@ L.Map.addInitHook(function() {
 	this.addControl( streetviewBtn );
 
 
-	// Curcor coordinates
-	this.addControl(
-		L.control.coordinates({
-			position: "bottomleft",
-			decimals: 4,
-			decimalSeperator: ".",
-			labelTemplateLat: "Lat: {y}",
-			labelTemplateLng: "Lon: {x}",
-			enableUserInput: false,
-			useLatLngOrder: true
-		})
-	);
-
-
 	// Distance scale
 	this.addControl(
 		L.control.scale({
 			position: "bottomleft",
 			metric: true,
 			imperial: false
+		})
+	);
+
+
+	// Zoom control
+	this.addControl(
+		L.control.zoom({
+			position: "bottomleft"
 		})
 	);
 
@@ -151,26 +186,19 @@ L.Map.addInitHook(function() {
 
 	this.basemaps = [];
 
-	this.basemaps.push(L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+	this.basemaps.push(L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 		{
 			id: uuid(),
 			name: "StreetMap",
-			attribution: `
-				&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OSM</a>
-				&copy; <a href=\"https://carto.com/attributions\" target=\"_blank\">CARTO</a> |
-				&copy; <a href=\"https://github.com/NapkinGIS/Napkin-Maps/blob/master/LICENCE\" target=\"_blank\">Napkin</a>
-			`,
-			subdomains: "abcd"
+			attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OSM</a>",
+			subdomains: "abc"
 		}));
 
 	this.basemaps.push(L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
 		{
 			id: uuid(),
 			name: "Satellite",
-			attribution: `
-				&copy; <a href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\">ESRI</a> |
-				&copy; <a href=\"https://github.com/NapkinGIS/Napkin-Maps/blob/master/LICENCE\" target=\"_blank\">Napkin</a>
-			`
+			attribution: "&copy; <a href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\">ESRI</a>"
 		}));
 
 	this.basemaps[0].addTo(this);

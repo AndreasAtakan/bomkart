@@ -4,20 +4,21 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="x-ua-compatible" content="ie=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
-	<meta name="description" content="Bomstasjoner i Norge" />
+	<meta name="description" content="Demokratene – Alt for Norge – Nei til bompenger!" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 
-	<!--link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png" />
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png" />
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png" />
-	<link rel="manifest" href="assets/favicons/site.webmanifest" />
-	<link rel="mask-icon" href="assets/favicons/safari-pinned-tab.svg" color="#5bbad5" />
-	<meta name="msapplication-TileColor" content="#da532c" />
-	<meta name="theme-color" content="#ffffff" /-->
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/favicons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
+	<link rel="manifest" href="assets/favicons/site.webmanifest">
+	<link rel="mask-icon" href="assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#2b5797">
+	<meta name="theme-color" content="#ffffff">
 
-	<title>bomkart – Bomstasjoner i Norge</title>
 
-	<!--link rel="icon" href="assets/logo.svg" /-->
+	<title>Demokratene – Alt for Norge – Nei til bompenger!</title>
+
+	<link rel="icon" href="assets/logo-small.jpg" />
 
 
 	<!-- font-awesome import -->
@@ -27,6 +28,9 @@
 	<script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
 	<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
 
+	<!-- leaflet.geometryutil import -->
+	<script type="text/javascript" src="lib/leaflet.geometryutil/leaflet.geometryutil.js"></script>
+
 	<!-- leaflet.routing.machine import -->
 	<script type="text/javascript" src="lib/leaflet.routing.machine/leaflet.routing.machine.js"></script>
 	<link rel="stylesheet" href="lib/leaflet.routing.machine/leaflet.routing.machine.css" />
@@ -34,11 +38,6 @@
 	<!-- leaflet.easybutton import -->
 	<script type="text/javascript" src="lib/leaflet.easybutton/leaflet.easybutton.js"></script>
 	<link rel="stylesheet" href="lib/leaflet.easybutton/leaflet.easybutton.css" />
-
-	<!-- leaflet.coordinates import -->
-	<script type="text/javascript" src="lib/leaflet.coordinates/leaflet.coordinates.js"></script>
-	<link rel="stylesheet" href="lib/leaflet.coordinates/leaflet.coordinates.css" />
-	<link rel="stylesheet" href="lib/leaflet.coordinates/leaflet.coordinates.ie.css" />
 
 	<!-- leaflet.locatecontrol import -->
 	<script type="text/javascript" src="lib/leaflet.locatecontrol/leaflet.locatecontrol.min.js"></script>
@@ -63,7 +62,7 @@
 	<script type="text/javascript">
 		"use strict";
 
-		function initMap() { console.log("-"); }
+		function initMap() { console.log("."); }
 	</script>
 
 
@@ -77,7 +76,16 @@
 </head>
 <body>
 
+	<div id="nav">
+		<img id="logo" src="assets/logo.jpg" />
+		<a id="stem" href="https://demokratene.org/medlem/" target="_blank">Bli medlem</a>
+	</div>
+
 	<div id="map"></div>
+
+	<div id="footer">
+		<p id="stasjoner"></p>
+	</div>
 
 	<div id="streetviewContainer">
 		<i class="fas fa-angle-left" id="back"></i>

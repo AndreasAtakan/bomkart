@@ -2,10 +2,11 @@
 
 window.addEventListener("load", function() {
 	//feather.replace();
+	window._DATA = [];
 
 
 	let map = new L.Map("map", {
-		center: [64, 14],
+		center: [ 63.52897, 10.45898 ],
 		zoomControl: false,
 		zoom: 5,
 		maxZoom: 18
@@ -13,7 +14,7 @@ window.addEventListener("load", function() {
 	});
 
 
-	let layers = [ L.markerClusterGroup() ];
+	let layers = [ L.markerClusterGroup({ disableClusteringAtZoom: 12 }) ];
 
 	$.ajax({
 		type: "GET",
@@ -53,14 +54,27 @@ window.addEventListener("load", function() {
 				cont += `<b>Rushtid ettermiddag</b> : ${f['Rushtid ettermiddag, fra']} – ${f['Rushtid ettermiddag, til']} <br />`;
 			}
 			cont += `<br />`;
-			cont += `<b>Takst liten bil</b> : kr${f['Takst liten bil']} ${
-				f['Rushtidstakst liten bil'] ? `( kr${f['Rushtidstakst liten bil']} rushtid )` : ''
-			} <br />`;
-			cont += `<b>Takst stor bil</b> : kr${f['Takst stor bil']} ${
-				f['Rushtidstakst stor bil'] ? `( kr${f['Rushtidstakst stor bil']} rushtid )` : ''
-			}`;
+			if(f['Takst liten bil']) {
+				cont += `<b>Takst liten bil</b> : kr${f['Takst liten bil']} ${
+					f['Rushtidstakst liten bil'] ? `( kr${f['Rushtidstakst liten bil']} rushtid )` : ''
+				} <br />`;
+				cont += `<b>Takst stor bil</b> : kr${f['Takst stor bil']} ${
+					f['Rushtidstakst stor bil'] ? `( kr${f['Rushtidstakst stor bil']} rushtid )` : ''
+				}`;
+			}
 
-			layers[0].addLayer( L.marker(latlng).bindPopup(cont) );
+			window._DATA.push( latlng );
+			/*window._DATA.push([
+				latlng,
+				f['Takst liten bil'],
+				f['Rushtidstakst liten bil'] ? f['Rushtidstakst liten bil'] : f['Takst liten bil']
+			]);*/
+
+			layers[0].addLayer(
+				L.circleMarker(latlng, { color: '#ff1a1a' })
+				.setRadius(5)
+				.bindPopup(cont)
+			);
 		}
 
 		map.addLayer( layers[0] );

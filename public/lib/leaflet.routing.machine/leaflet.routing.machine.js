@@ -16067,7 +16067,7 @@ module.exports={
 
 		_hookEvents: function(l) {
 			l.on('linetouched', function(e) {
-				this._plan.dragNewWaypoint(e);
+				//this._plan.dragNewWaypoint(e);
 			}, this);
 		},
 
@@ -16967,10 +16967,11 @@ module.exports = L.Routing = {
 				this._extendToWaypoints();
 			}
 
-			this._addSegment(
+            this._addSegment(
 				route.coordinates,
 				this.options.styles,
-				this.options.addWaypoints);
+				this.options.addWaypoints
+            );
 		},
 
 		getBounds: function() {
@@ -17929,17 +17930,7 @@ module.exports = L.Routing = {
 
 			if (!this.options.suppressDemoServerWarning &&
 				this.options.serviceUrl.indexOf('//router.project-osrm.org') >= 0) {
-				console.warn('You are using OSRM\'s demo server. ' +
-					'Please note that it is **NOT SUITABLE FOR PRODUCTION USE**.\n' +
-					'Refer to the demo server\'s usage policy: ' +
-					'https://github.com/Project-OSRM/osrm-backend/wiki/Api-usage-policy\n\n' +
-					'To change, set the serviceUrl option.\n\n' +
-					'Please do not report issues with this server to neither ' +
-					'Leaflet Routing Machine or OSRM - it\'s for\n' +
-					'demo only, and will sometimes not be available, or work in ' +
-					'unexpected ways.\n\n' +
-					'Please set up your own OSRM server, or use a paid service ' +
-					'provider for production.');
+				console.warn('You are using OSRM\'s demo server.');
 			}
 		},
 
@@ -17976,7 +17967,7 @@ module.exports = L.Routing = {
 
 			return xhr = corslite(url, L.bind(function(err, resp) {
 				var data,
-					error =  {};
+					error = {};
 
 				clearTimeout(timer);
 				if (!timedOut) {
@@ -17984,7 +17975,7 @@ module.exports = L.Routing = {
 						try {
 							data = JSON.parse(resp.responseText);
 							try {
-								return this._routeDone(data, wps, options, callback, context);
+                                return this._routeDone(data, wps, options, callback, context);
 							} catch (ex) {
 								error.status = -3;
 								error.message = ex.toString();
@@ -18227,8 +18218,7 @@ module.exports = L.Routing = {
 				hints.push(this._hints.locations[this._locationKey(latLng)] || '');
 			}
 
-			computeInstructions =
-				true;
+			computeInstructions = true;
 
 			return this.options.serviceUrl + '/' + this.options.profile + '/' +
 				locs.join(';') + '?' +
@@ -18236,7 +18226,8 @@ module.exports = L.Routing = {
 				'&alternatives=' + computeAlternative.toString() +
 				'&steps=' + computeInstructions.toString() +
 				(this.options.useHints ? '&hints=' + hints.join(';') : '') +
-				(options.allowUTurns ? '&continue_straight=' + !options.allowUTurns : '');
+				(options.allowUTurns ? '&continue_straight=' + !options.allowUTurns : '') +
+                '&exclude=toll'; // '&exclude=motorway'
 		},
 
 		_locationKey: function(location) {
