@@ -14,7 +14,7 @@ window.addEventListener("load", function() {
 	});
 
 
-	let layers = [ L.markerClusterGroup({ disableClusteringAtZoom: 12 }) ];
+	let layers = [ L.markerClusterGroup({ disableClusteringAtZoom: 12, spiderfyOnMaxZoom: false }) ];
 
 	$.ajax({
 		type: "GET",

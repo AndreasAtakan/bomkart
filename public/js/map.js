@@ -8,7 +8,8 @@ L.Map.addInitHook(function() {
 			provider: new GeoSearch.OpenStreetMapProvider(),
 			style: "bar",
 			autoClose: true,
-			keepResult: true
+			showMarker: false
+			//keepResult: true
 		})
 	);
 
@@ -26,6 +27,22 @@ L.Map.addInitHook(function() {
 		collapsible: true,
 		show: false,
 		position: "topright"
+	});
+
+	let _POS = null;
+	this.on('geosearch/showlocation', ev => {
+		_POS = { lat: ev.location.y, lng: ev.location.x };
+		this.locate();
+	});
+	this.on('locationfound', ev => {
+		if(!_POS) return;
+
+		let latlng = ev.latlng;
+
+		router.spliceWaypoints(0, 1, _POS);
+		router.spliceWaypoints(router.getWaypoints().length - 1, 1, latlng);
+
+		_POS = null;
 	});
 
 	router.on('routeselected', ev => {
