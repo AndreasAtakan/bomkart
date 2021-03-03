@@ -39,8 +39,8 @@ L.Map.addInitHook(function() {
 
 		let latlng = ev.latlng;
 
-		router.spliceWaypoints(0, 1, latlng);
-		router.spliceWaypoints(router.getWaypoints().length - 1, 1, _POS);
+		router.spliceWaypoints(0, 1, _POS);
+		router.spliceWaypoints(router.getWaypoints().length - 1, 1, latlng);
 
 		_POS = null;
 	});
@@ -78,13 +78,17 @@ L.Map.addInitHook(function() {
 			}
 		}
 
+		let color, cont;
 		if(stasjoner > 0) {
-			$("p#stasjoner").css("color", "red");
-			$("p#stasjoner").html(`Obs: Rute inneholder ${ stasjoner } ${ stasjoner > 1 ? "bomstasjoner" : "bomstasjon" }!`);
+			color = "red";
+			cont = `Obs: Rute inneholder ${ stasjoner } ${ stasjoner > 1 ? "bomstasjoner" : "bomstasjon" }!`;
 		}else{
-			$("p#stasjoner").css("color", "green");
-			$("p#stasjoner").html(`Rute inneholder ikke bomstasjoner.`);
+			color = "green";
+			cont = "Rute inneholder ikke bomstasjoner.";
 		}
+		$("p#stasjoner").css("color", color);
+		$("p#stasjoner").html(cont);
+
 		//$("span#pris").html(`Ordinær pris: kr ${pris},`);
 		//$("span#rushpris").html(`Rushpris: kr ${rushpris}`);
 	});
@@ -154,6 +158,15 @@ L.Map.addInitHook(function() {
 				onClick: control => {
 					control.state("streetviewCancel");
 					this.once("click", streetviewEnable);
+
+					if(DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') {
+						DeviceOrientationEvent.requestPermission()
+						.then(function(permissionState) {
+							console.log(permissionState);
+
+							if(permissionState === 'granted') { /**/ }
+						});
+					}
 				}
 			},
 			{

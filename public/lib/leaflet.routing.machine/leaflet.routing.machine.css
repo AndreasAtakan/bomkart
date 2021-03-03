@@ -1,7 +1,6 @@
 .leaflet-routing-container, .leaflet-routing-error {
     width: calc(100vw - 20px);
     max-width: 320px;
-    max-height: 70vh;
     background-color: white;
     padding-top: 4px;
     padding-bottom: 26px;
@@ -183,7 +182,6 @@
     position: absolute;
     display: block;
     width: 15px;
-    height: 1px;
     z-index: 1;
     right: 1px;
     top: -10px;
@@ -201,7 +199,6 @@
     margin-top: -16px;
     padding-right: 4px;*/
     line-height: 1;
-    overflow-y: auto;
 }
 
 .leaflet-routing-remove-waypoint:hover {
