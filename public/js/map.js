@@ -39,8 +39,8 @@ L.Map.addInitHook(function() {
 
 		let latlng = ev.latlng;
 
-		router.spliceWaypoints(0, 1, _POS);
-		router.spliceWaypoints(router.getWaypoints().length - 1, 1, latlng);
+		router.spliceWaypoints(0, 1, latlng);
+		router.spliceWaypoints(router.getWaypoints().length - 1, 1, _POS);
 
 		_POS = null;
 	});
